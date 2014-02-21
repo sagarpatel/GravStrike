@@ -1,16 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
-public class Gun : MonoBehaviour {
+public class Gun : MonoBehaviour 
+{
+
+	int playerIndex;
 
 	void Start () 
 	{
-		Shoot ();
+		Debug.Log(gameObject.GetComponent<PlayerInfo>());
+		// traversing up to the main player object
+		playerIndex = transform.root.gameObject.GetComponent<PlayerInfo>().playerIndex;
 	}
 	
 	void Update () 
 	{
-	
+
+		var inputDevice = InputManager.Devices[playerIndex];
+		if(inputDevice.Action1.IsPressed)
+		{
+			Debug.Log("FIRE BUTTON PRESSED !!!");
+		}
+
 	}
 
 	void Shoot ()
