@@ -7,10 +7,6 @@ public class Gun : MonoBehaviour
 
 	int playerIndex;
 
-	private 
-
-	private 
-
 	void Start () 
 	{
 		Debug.Log(gameObject.GetComponent<PlayerInfo>());
@@ -20,21 +16,12 @@ public class Gun : MonoBehaviour
 	
 	void Update () 
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 		var inputDevice = InputManager.Devices[playerIndex];
 		if(inputDevice.Action1.IsPressed)
 		{
 			Debug.Log("FIRE BUTTON PRESSED !!!");
 		}
 
-=======
-		
->>>>>>> 0ad7a525dd503953ad953fdb0917380fbfd28b10
-=======
-		
->>>>>>> 0ad7a525dd503953ad953fdb0917380fbfd28b10
 	}
 
 	void Shoot ()
