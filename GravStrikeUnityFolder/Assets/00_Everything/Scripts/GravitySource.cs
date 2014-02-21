@@ -13,7 +13,10 @@ public class GravitySource : MonoBehaviour
 	}
 	public rotationTypes gravityRotation;
 
-	public List<GameObject> gameObjectsInReach;
+	[Range(-10,10)]
+	public float gravityPullStrength = 1.0f;
+
+	List<GameObject> gameObjectsInReach;
 
 	// Use this for initialization
 	void Start () 
@@ -41,7 +44,15 @@ public class GravitySource : MonoBehaviour
 				gameObjectsInReach.Add(higgBosonGO);
 			}
 		}
+	}
 
+	void ApplyGravity()
+	{
+
+		foreach( GameObject hbGameObject in gameObjectsInReach )
+		{
+			
+		}
 
 	}
 
