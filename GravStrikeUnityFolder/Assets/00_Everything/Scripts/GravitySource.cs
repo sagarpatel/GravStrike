@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GravitySource : MonoBehaviour 
 {
@@ -12,12 +13,12 @@ public class GravitySource : MonoBehaviour
 	}
 	public rotationTypes gravityRotation;
 
-	GameObject[] gameObjectsInReach;
+	public List<GameObject> gameObjectsInReach;
 
 	// Use this for initialization
 	void Start () 
 	{
-	
+		gameObjectsInReach = new List<GameObject>();
 	}
 	
 	// Update is called once per frame
@@ -29,11 +30,16 @@ public class GravitySource : MonoBehaviour
 	void GetGameObjectsInReach()
 	{
 		HiggsBoson[] goHBArray = GameObject.FindObjectsOfType(typeof(HiggsBoson)) as HiggsBoson[] ;
-		//Debug.Log(goHBArray);
+		gameObjectsInReach.Clear();
+
 		for(int i = 0; i< goHBArray.Length; i ++)
 		{
 			GameObject higgBosonGO = goHBArray[i].transform.gameObject;
-			//Debug.Log(higgBosonGO);
+			float distanceToGO = Vector3.Distance(transform.position, higgBosonGO.transform.position);
+			if(distanceToGO < gravityReach)
+			{
+				gameObjectsInReach.Add(higgBosonGO);
+			}
 		}
 
 
