@@ -13,7 +13,10 @@ public class GravitySource : MonoBehaviour
 	}
 	public rotationTypes gravityRotation;
 
-	public List<GameObject> gameObjectsInReach;
+	[Range(-10,10)]
+	public float gravityPullStrength = 1.0f;
+
+	List<GameObject> gameObjectsInReach;
 
 	// Use this for initialization
 	void Start () 
@@ -25,6 +28,7 @@ public class GravitySource : MonoBehaviour
 	void Update () 
 	{
 		GetGameObjectsInReach();
+		ApplyGravity();
 	}
 
 	void GetGameObjectsInReach()
@@ -41,7 +45,18 @@ public class GravitySource : MonoBehaviour
 				gameObjectsInReach.Add(higgBosonGO);
 			}
 		}
+	}
 
+	void ApplyGravity()
+	{
+
+		foreach( GameObject hbGameObject in gameObjectsInReach )
+		{
+			Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+			forceDirection.Normalize();
+			Vector3 velocityToAdd = gravityPullStrength * forceDirection;
+			hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+		}
 
 	}
 
