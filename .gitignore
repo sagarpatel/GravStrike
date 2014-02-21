@@ -1,7 +1,7 @@
 Temp/
 Obj/
 UnityGenerated/
-Library/
+/GravStrikeUnityFolder/Library/
 Assets/00_Everything/Art/Concepts
 *.psd
 *.psd.meta
