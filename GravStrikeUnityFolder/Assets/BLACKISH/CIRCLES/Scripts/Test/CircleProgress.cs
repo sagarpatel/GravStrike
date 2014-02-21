@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class TestProgress : MonoBehaviour {
+public class CircleProgress : MonoBehaviour {
 	
 	public BuildCircleMesh circle;
 	
