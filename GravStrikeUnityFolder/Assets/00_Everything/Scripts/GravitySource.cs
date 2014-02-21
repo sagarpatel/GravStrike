@@ -28,6 +28,7 @@ public class GravitySource : MonoBehaviour
 	void Update () 
 	{
 		GetGameObjectsInReach();
+		ApplyGravity();
 	}
 
 	void GetGameObjectsInReach()
@@ -51,7 +52,10 @@ public class GravitySource : MonoBehaviour
 
 		foreach( GameObject hbGameObject in gameObjectsInReach )
 		{
-			
+			Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+			forceDirection.Normalize();
+			Vector3 velocityToAdd = gravityPullStrength * forceDirection;
+			hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 		}
 
 	}

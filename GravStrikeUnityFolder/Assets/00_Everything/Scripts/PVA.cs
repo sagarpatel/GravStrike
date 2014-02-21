@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PVA : MonoBehaviour 
 {	
+	public bool rotationPointsToCurrentVelocity = false;
 
 	Vector3 position;
 	public Vector3 velocity;
@@ -38,6 +39,18 @@ public class PVA : MonoBehaviour
 		// apply decay
 		velocity = (1.0f - velocityDecay) * velocity;
 		acceleration = (1.0f - accelerationDecay) * acceleration;
+
+		// do rotation, if necessary
+		if(rotationPointsToCurrentVelocity)
+		{
+			if(velocity.magnitude != 0)
+			{
+				Vector3 direction = velocity;
+				direction.Normalize();
+				transform.right = direction;
+			}
+		}
+
 	}
 
 
