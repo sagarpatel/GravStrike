@@ -17,7 +17,7 @@ public class Gun : MonoBehaviour
 	void Update () 
 	{
 		var inputDevice = InputManager.Devices[playerIndex];
-		if(inputDevice.Action1.IsPressed)
+		if(inputDevice.Action3.IsPressed)
 		{
 			Debug.Log("FIRE BUTTON PRESSED !!!");
 		}

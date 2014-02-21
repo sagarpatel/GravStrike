@@ -47,7 +47,7 @@ public class PVA : MonoBehaviour
 			{
 				Vector3 direction = velocity;
 				direction.Normalize();
-				transform.right = direction;
+				transform.up = direction;
 			}
 		}
 
