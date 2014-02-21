@@ -15,6 +15,6 @@ public class Gun : MonoBehaviour {
 
 	void Shoot ()
 	{
-		print ("do something");
+		
 	}
 }
