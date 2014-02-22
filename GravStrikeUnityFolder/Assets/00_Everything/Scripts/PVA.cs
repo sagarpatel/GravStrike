@@ -12,7 +12,7 @@ public class PVA : MonoBehaviour
 	public Vector3 intialVelocity;
 	public Vector3 intialAcceleration;
 
-	[Range(0,1)]
+	[Range(0,0.1f)]
 	public float velocityDecay = 0;
 
 	[Range(0,1)]

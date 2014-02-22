@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class GravitySource : MonoBehaviour 
 {
 
-	[Range(1,20)]
+	[Range(1,50)]
 	public float gravityReach = 2.0f;
 	public enum gravityEquationTypes
 	{
-		Constant, LinearScale
+		Constant, Linear, Squared
 	}
 	public gravityEquationTypes gravityEquation;
 
@@ -59,12 +59,25 @@ public class GravitySource : MonoBehaviour
 				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 			}
 		}
-		else if( gravityEquation == gravityEquationTypes.LinearScale )
+		else if( gravityEquation == gravityEquationTypes.Linear )
 		{
 			foreach( GameObject hbGameObject in gameObjectsInReach )
 			{
 				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
 				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			}
+		}
+		else if( gravityEquation == gravityEquationTypes.Squared )
+		{
+			foreach( GameObject hbGameObject in gameObjectsInReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+				distanceBetween = distanceBetween * distanceBetween;
 
 				forceDirection.Normalize();
 				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
