@@ -13,7 +13,7 @@ public class GravitySource : MonoBehaviour
 	}
 	public gravityEquationTypes gravityEquation;
 
-	[Range(-10,10)]
+	[Range(-20,20)]
 	public float gravityPullStrength = 1.0f;
 
 	List<GameObject> gameObjectsInReach;
