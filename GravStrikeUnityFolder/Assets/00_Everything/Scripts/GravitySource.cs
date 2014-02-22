@@ -100,7 +100,7 @@ public class GravitySource : MonoBehaviour
 
 	}
 
-	void OnDrawGizmosSelected() 
+	void OnDrawGizmos() 
 	{
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, gravityReach);
