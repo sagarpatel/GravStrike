@@ -6,11 +6,15 @@ public class Gun : MonoBehaviour
 {
 
 	int playerIndex;
+	public float waitTime;
+	public float waitTimer;
+	public float countdownSpeed;
+	CircleProgress cp;
 
 	void Start () 
 	{
-		Debug.Log(gameObject.GetComponent<PlayerInfo>());
-		// traversing up to the main player object
+		waitTimer = waitTime;
+		cp = transform.root.FindChild("circle").gameObject.GetComponent<CircleProgress>();
 		playerIndex = transform.root.gameObject.GetComponent<PlayerInfo>().playerIndex;
 	}
 	
@@ -26,13 +30,35 @@ public class Gun : MonoBehaviour
 		
 		if(inputDevice.Action3.IsPressed)
 		{
-			Debug.Log("FIRE BUTTON PRESSED !!!");
+//			Debug.Log("FIRE BUTTON PRESSED !!!");
+			StartShootTimer();
+			if (waitTimer <= 0)
+			{
+				Shoot();
+			}
+
+		} else {
+			ResetShootTimer();
+//			Debug.Log ("FIRE NOT PRESSED");
 		}
 
 	}
 
+	void StartShootTimer ()
+	{
+		waitTimer -= countdownSpeed * Time.deltaTime;
+		cp.prog = (waitTimer * 180)/waitTime;
+	}
+
+	void ResetShootTimer ()
+	{
+		waitTimer = waitTime;
+		cp.prog = 180;
+	}
+
 	void Shoot ()
 	{
+		ResetShootTimer();
 		GameObject bullet = (GameObject)Instantiate(Resources.Load("BulletPrefab"));
 		bullet.transform.position = transform.position;
 		bullet.transform.rotation = transform.rotation;
