@@ -29,17 +29,8 @@ public class PVA : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		// do core PVA update
-		position = transform.position;
-		position += velocity * Time.deltaTime;
-		velocity += acceleration * Time.deltaTime;
-
-		transform.position = position;
-
-		// apply decay
-		velocity = (1.0f - velocityDecay) * velocity;
-		acceleration = (1.0f - accelerationDecay) * acceleration;
-
+		transform.position = ApplyPVA( transform.position );
+		
 		// do rotation, if necessary
 		if(rotationPointsToCurrentVelocity)
 		{
@@ -51,6 +42,24 @@ public class PVA : MonoBehaviour
 			}
 		}
 
+	}
+
+	public Vector3 ApplyPVA( Vector3 startPosition )
+	{
+		Vector3 endPosition;
+
+		// do core PVA update
+		position = startPosition;
+		position += velocity * Time.deltaTime;
+		velocity += acceleration * Time.deltaTime;
+
+		endPosition = position;
+
+		// apply decay
+		velocity = (1.0f - velocityDecay) * velocity;
+		acceleration = (1.0f - accelerationDecay) * acceleration;
+
+		return endPosition;
 	}
 
 
