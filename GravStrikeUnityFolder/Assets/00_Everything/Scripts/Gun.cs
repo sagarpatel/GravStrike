@@ -16,7 +16,14 @@ public class Gun : MonoBehaviour
 	
 	void Update () 
 	{
-		var inputDevice = InputManager.Devices[playerIndex];
+		// for debung, in case no controller is plugged in
+		var inputDevice = InputManager.ActiveDevice;
+
+		if( InputManager.Devices.Count > 0 )
+		{
+			inputDevice = InputManager.Devices[playerIndex];
+		}
+		
 		if(inputDevice.Action3.IsPressed)
 		{
 			Debug.Log("FIRE BUTTON PRESSED !!!");

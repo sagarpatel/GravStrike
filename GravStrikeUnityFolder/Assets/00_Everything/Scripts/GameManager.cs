@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 	void Start () 
 	{
 		InputManager.Setup();
-
+		InputManager.AttachDevice( new UnityInputDevice( new FPSProfile() ) );
 	}
 	
 	// Update is called once per frame

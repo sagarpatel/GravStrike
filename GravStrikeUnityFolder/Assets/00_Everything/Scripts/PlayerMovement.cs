@@ -18,12 +18,20 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		// for debung, in case no controller is plugged in
+		var inputDevice = InputManager.ActiveDevice;
 
-		var inputDevice = InputManager.Devices[playerIndex];
-		if(inputDevice.Action1.IsPressed)
+		if( InputManager.Devices.Count > 0 )
+		{
+			inputDevice = InputManager.Devices[playerIndex];
+		}
+		
+		
+		if(inputDevice.Action1.IsPressed || inputDevice.Action4.IsPressed)
 		{
 			Propulse();
 		}
+	
 	
 	}
 
