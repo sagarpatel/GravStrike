@@ -26,10 +26,13 @@ public class GravitySource : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		ApplyGravity( GetHBGameObjectsList() );
+		foreach(GameObject hbGO in GetHBGameObjectsList() )
+		{
+			ApplyGravity( hbGO );
+		}
 	}
 
-	public List<GameObject> GetHBGameObjectsList()
+	List<GameObject> GetHBGameObjectsList()
 	{
 		HiggsBoson[] goHBArray = GameObject.FindObjectsOfType(typeof(HiggsBoson)) as HiggsBoson[] ;
 		List<GameObject> hbGameObjectsList = new List<GameObject>();
@@ -47,71 +50,67 @@ public class GravitySource : MonoBehaviour
 		return hbGameObjectsList;
 	}
 
-	void ApplyGravity( List<GameObject> hbGameObjectsList )
+	public void ApplyGravity( GameObject hbGameObject )
 	{
 		if(gravityEquation == gravityEquationTypes.Constant )
 		{
-			foreach( GameObject hbGameObject in hbGameObjectsList )
+
+			float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
+			if( distanceToGo < gravityReach )
 			{
-				float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
-				if( distanceToGo < gravityReach )
-				{
-					Vector3 forceDirection = transform.position - hbGameObject.transform.position;
-					forceDirection.Normalize();
-					Vector3 velocityToAdd = gravityPullStrength * forceDirection;
-					hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
-				}
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 			}
+		
 		}
 		else if( gravityEquation == gravityEquationTypes.Linear )
 		{
-			foreach( GameObject hbGameObject in hbGameObjectsList )
-			{
-				float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
-				if( distanceToGo < gravityReach )
-				{
-					Vector3 forceDirection = transform.position - hbGameObject.transform.position;
-					float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
 
-					forceDirection.Normalize();
-					Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
-					hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
-				}
+			float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
+			if( distanceToGo < gravityReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 			}
+		
 		}
 		else if( gravityEquation == gravityEquationTypes.Squared )
 		{
-			foreach( GameObject hbGameObject in hbGameObjectsList )
-			{
-				float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
-				if( distanceToGo < gravityReach )
-				{
-					Vector3 forceDirection = transform.position - hbGameObject.transform.position;
-					float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
-					distanceBetween = distanceBetween * distanceBetween;
 
-					forceDirection.Normalize();
-					Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
-					hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
-				}
+			float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
+			if( distanceToGo < gravityReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+				distanceBetween = distanceBetween * distanceBetween;
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 			}
+		
 		}
 		else if( gravityEquation == gravityEquationTypes.InverseDistanceSquare )
 		{
-			foreach( GameObject hbGameObject in hbGameObjectsList )
-			{
-				float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
-				if( distanceToGo < gravityReach )
-				{
-					Vector3 forceDirection = transform.position - hbGameObject.transform.position;
-					float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
-					distanceBetween = distanceBetween * distanceBetween;
 
-					forceDirection.Normalize();
-					Vector3 velocityToAdd = gravityPullStrength * distanceBetween * forceDirection;
-					hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
-				}
+			float distanceToGo = Vector3.Distance(transform.position, hbGameObject.transform.position);
+			if( distanceToGo < gravityReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+				distanceBetween = distanceBetween * distanceBetween;
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength * distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
 			}
+		
 		}
 
 	}
