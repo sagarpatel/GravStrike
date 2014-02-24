@@ -29,10 +29,6 @@ public class PathPreview : MonoBehaviour
 	
 	}
 
-	public Vector3 CalculateNextPosition( Vector3 startPosition )
-	{
-		
-	}
 
 
 }
