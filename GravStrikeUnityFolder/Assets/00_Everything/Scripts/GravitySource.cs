@@ -5,15 +5,15 @@ using System.Collections.Generic;
 public class GravitySource : MonoBehaviour 
 {
 
-	[Range(1,10)]
+	[Range(1,50)]
 	public float gravityReach = 2.0f;
-	public enum rotationTypes
+	public enum gravityEquationTypes
 	{
-		ClockWise, CounterClockWise
+		Constant, Linear, Squared, InverseDistanceSquare
 	}
-	public rotationTypes gravityRotation;
+	public gravityEquationTypes gravityEquation;
 
-	[Range(-10,10)]
+	[Range(-20,20)]
 	public float gravityPullStrength = 1.0f;
 
 	List<GameObject> gameObjectsInReach;
@@ -49,18 +49,58 @@ public class GravitySource : MonoBehaviour
 
 	void ApplyGravity()
 	{
-
-		foreach( GameObject hbGameObject in gameObjectsInReach )
+		if(gravityEquation == gravityEquationTypes.Constant )
 		{
-			Vector3 forceDirection = transform.position - hbGameObject.transform.position;
-			forceDirection.Normalize();
-			Vector3 velocityToAdd = gravityPullStrength * forceDirection;
-			hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			foreach( GameObject hbGameObject in gameObjectsInReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			}
+		}
+		else if( gravityEquation == gravityEquationTypes.Linear )
+		{
+			foreach( GameObject hbGameObject in gameObjectsInReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			}
+		}
+		else if( gravityEquation == gravityEquationTypes.Squared )
+		{
+			foreach( GameObject hbGameObject in gameObjectsInReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+				distanceBetween = distanceBetween * distanceBetween;
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength/distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			}
+		}
+		else if( gravityEquation == gravityEquationTypes.InverseDistanceSquare )
+		{
+			foreach( GameObject hbGameObject in gameObjectsInReach )
+			{
+				Vector3 forceDirection = transform.position - hbGameObject.transform.position;
+				float distanceBetween = Mathf.Clamp(forceDirection.magnitude, 1.0f, gravityReach);
+				distanceBetween = distanceBetween * distanceBetween;
+
+				forceDirection.Normalize();
+				Vector3 velocityToAdd = gravityPullStrength * distanceBetween * forceDirection;
+				hbGameObject.GetComponent<PVA>().velocity += velocityToAdd;
+			}
 		}
 
 	}
 
-	void OnDrawGizmosSelected() 
+	void OnDrawGizmos() 
 	{
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, gravityReach);

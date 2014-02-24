@@ -12,7 +12,7 @@ public class PVA : MonoBehaviour
 	public Vector3 intialVelocity;
 	public Vector3 intialAcceleration;
 
-	[Range(0,1)]
+	[Range(0,0.1f)]
 	public float velocityDecay = 0;
 
 	[Range(0,1)]
@@ -47,7 +47,7 @@ public class PVA : MonoBehaviour
 			{
 				Vector3 direction = velocity;
 				direction.Normalize();
-				transform.right = direction;
+				transform.up = Vector3.Lerp(transform.up, direction, 20.0f *Time.deltaTime);
 			}
 		}
 
