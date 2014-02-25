@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		
 		
-		if(inputDevice.Action1.IsPressed || inputDevice.Action4.IsPressed)
+		if(inputDevice.LeftTrigger.IsPressed || inputDevice.LeftBumper.IsPressed)
 		{
 			Propulse();
 		}

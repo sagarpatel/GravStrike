@@ -5,14 +5,12 @@ using InControl;
 public class GameManager : MonoBehaviour 
 {
 
-	// Use this for initialization
 	void Start () 
 	{
 		InputManager.Setup();
 		InputManager.AttachDevice( new UnityInputDevice( new FPSProfile() ) );
 	}
 	
-	// Update is called once per frame
 	void Update () 
 	{
 		
