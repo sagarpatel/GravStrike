@@ -39,11 +39,14 @@ public class GravitySource : MonoBehaviour
 
 		for(int i = 0; i< goHBArray.Length; i ++)
 		{
-			GameObject higgBosonGO = goHBArray[i].transform.gameObject;
-			float distanceToGO = Vector3.Distance(transform.position, higgBosonGO.transform.position);
-			if(distanceToGO < gravityReach)
+			if(goHBArray[i].GetComponent<HiggsBoson>().enabled)
 			{
-				hbGameObjectsList.Add(higgBosonGO);
+				GameObject higgBosonGO = goHBArray[i].transform.gameObject;
+				float distanceToGO = Vector3.Distance(transform.position, higgBosonGO.transform.position);
+				if(distanceToGO < gravityReach)
+				{
+					hbGameObjectsList.Add(higgBosonGO);
+				}
 			}
 		}
 
