@@ -3,22 +3,26 @@ using System.Collections;
 
 public class Destructability : MonoBehaviour {
 
+	int playerIndex;
 	public string killTag;
 
 	void Start () {
-		
+		playerIndex = gameObject.GetComponent<PlayerInfo>().playerIndex;
 	}
 	
 	void Update () {
 		
 	}
 
-	void On2DCollisionEnter2D (Collision2D collision)
+	void OnCollisionEnter2D (Collision2D collision)
 	{
-		print ("collided");
-		if (collision.collider.tag == killTag)
+		// if the bullet I collided with is not my bullet, destroy myself
+		if (collision.collider.GetComponent<Bullet>().playerIndex != playerIndex)
 		{
-			Destroy (gameObject);
+			if (collision.collider.tag == killTag)
+			{
+				Destroy (gameObject);
+			}
 		}
 	}
 }
