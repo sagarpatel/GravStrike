@@ -31,7 +31,7 @@ public class Gun : MonoBehaviour
 			inputDevice = InputManager.Devices[playerIndex];
 		}
 		
-		if(inputDevice.Action3.IsPressed)
+		if(inputDevice.RightTrigger.IsPressed)
 		{
 			if (canShoot)
 			{
@@ -40,14 +40,18 @@ public class Gun : MonoBehaviour
 			if (waitTimer <= 0)
 			{
 				canShoot = false;
-				Shoot();
 			}
 
 		} 
 
-		if(inputDevice.Action3.WasReleased)
+		if(inputDevice.RightTrigger.WasReleased)
 		{
+			if (!canShoot)
+			{
+				Shoot();
+			}
 			canShoot = true;
+		
 			ResetShootTimer();
 //			Debug.Log ("FIRE NOT PRESSED");
 		}
