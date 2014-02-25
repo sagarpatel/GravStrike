@@ -8,7 +8,7 @@ public class Gun : MonoBehaviour
 	int playerIndex;
 	public float waitTime;
 	public float waitTimer;
-	public float countdownSpeed;
+//	public float countdownSpeed;
 	CircleProgress cp;
 
 	void Start () 
@@ -46,7 +46,7 @@ public class Gun : MonoBehaviour
 
 	void StartShootTimer ()
 	{
-		waitTimer -= countdownSpeed * Time.deltaTime;
+		waitTimer -= 1 * Time.deltaTime;
 		cp.prog = (waitTimer * 180)/waitTime;
 	}
 
